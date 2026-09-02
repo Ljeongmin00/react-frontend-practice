@@ -91,3 +91,16 @@ button {
   background-color: #222;
   color: white;
 }
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.message {
+  margin-top: 16px;
+  color: #2563eb;
+  font-weight: 600;
+}
