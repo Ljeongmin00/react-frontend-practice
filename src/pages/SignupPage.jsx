@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signup } from "../api/apiClient";
 
 function SignupPage(){
     const [username, setUsername] = useState("");
@@ -6,7 +7,7 @@ function SignupPage(){
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    function handleSignup() {
+    async function handleSignup() {
         if (username.trim() === ""){
             setMessage("이름을 입력해주세요.");
             return;
@@ -23,12 +24,19 @@ function SignupPage(){
             setMessage("비밀번호는 8자 이상이어야 합니다.");
             return;
         }
+        try {
+            const result = await signup({
+                username,
+                email,
+                password,
+            });
 
-        console.log(username);
-        console.log(email);
-        console.log(password);  
-
-        setMessage("회원가입 입력값 확인 완료");
+            console.log(result);
+            setMessage(result.message);
+        } catch (error) {
+            console.error(error);
+            setMessage(error.message);
+        }
     }
 
     return(

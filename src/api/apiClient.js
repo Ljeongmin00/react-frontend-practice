@@ -21,3 +21,10 @@ async function request(path, options = {}) {
 export async function getPosts() {
   return request("/posts?page=0&size=10");
 }
+
+export async function signup(data) {
+    return request("/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+}
