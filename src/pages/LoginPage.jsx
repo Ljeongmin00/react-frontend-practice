@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { login } from "../api/apiClient";
 
 function LoginPage(){
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [message,setMessage] = useState("");
 
-    function handleLogin(){
+    async function handleLogin(){
         if(email.trim() === "") {
             setMessage("이메일을 입력해주세요.");
             return;
@@ -19,11 +20,18 @@ function LoginPage(){
             return;
         }
 
-        console.log({
-            email,
-            password
-        });
-        setMessage("로그인 입력값 확인 완료");
+        try {
+            const result = await login({
+                email,
+                password
+            });
+
+            console.log(result);
+            setMessage(result.message);
+        } catch (error){
+            console.error(error);
+            setMessage(error.message);
+        }
     }
 
     return(

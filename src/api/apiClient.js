@@ -28,3 +28,10 @@ export async function signup(data) {
         body: JSON.stringify(data),
     });
 }
+
+export async function login(data) {
+    return request("/login", {
+        method: "POST",
+        body: JSON.stringify(data)
+    });
+}
