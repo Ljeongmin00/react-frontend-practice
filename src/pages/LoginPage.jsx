@@ -27,6 +27,7 @@ function LoginPage(){
             });
 
             console.log(result);
+            localStorage.setItem("loginUser",JSON.stringify(result.data));
             setMessage(result.message);
         } catch (error){
             console.error(error);
