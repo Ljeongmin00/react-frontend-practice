@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login } from "../api/apiClient";
 
-function LoginPage(){
+function LoginPage({onLogin}){
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [message,setMessage] = useState("");
@@ -28,6 +28,9 @@ function LoginPage(){
 
             console.log(result);
             localStorage.setItem("loginUser",JSON.stringify(result.data));
+            onLogin(result.data);
+            setEmail("");
+            setPassword("");
             setMessage(result.message);
         } catch (error){
             console.error(error);

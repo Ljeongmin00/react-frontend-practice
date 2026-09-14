@@ -5,14 +5,38 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 
 function App() {
+  const savedUser = localStorage.getItem("loginUser");
+
   const [currentPage, setCurrentPage] = useState("home");
+  const [loginUser, setLoginUser] = useState(
+    savedUser ? JSON.parse(savedUser) : null
+  );
+
+  function handleLogout() {
+    localStorage.removeItem("loginUser");
+    setLoginUser(null);
+    setCurrentPage("home");
+  }
+
   return (
     <div className="app">
-      <Header currentPage={currentPage} onChangePage={setCurrentPage}/>
+      <Header 
+      currentPage={currentPage}
+      onChangePage={setCurrentPage}
+      loginUser = {loginUser}
+      onLogout = {handleLogout}
+      />
 
       <main className="main">
         {currentPage === "home" && <HomePage />}
-        {currentPage === "login" && <LoginPage />}
+        {currentPage === "login" && (
+           <LoginPage
+              onLogin={(user) => {
+                setLoginUser(user);
+                setCurrentPage("home");
+              }}           
+           />
+           )}
         {currentPage === "signup" && <SignupPage />}
       </main>
     </div>
