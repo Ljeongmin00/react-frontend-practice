@@ -4,19 +4,28 @@ import { login } from "../api/apiClient";
 function LoginPage({onLogin}){
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
-    const [message,setMessage] = useState("");
+    const [message,setMessage] = useState(null);
 
     async function handleLogin(){
         if(email.trim() === "") {
-            setMessage("이메일을 입력해주세요.");
+            setMessage({
+                type: "error",
+                text: "이메일을 입력해주세요."
+            });
             return;
         }
         if(!email.includes("@")){
-            setMessage("이메일 형식이 올바르지 않습니다.");
+            setMessage({
+                type: "error",
+                text: "이메일 형식이 올바르지 않습니다."
+            });
             return;
         }
         if(password.trim() === ""){
-            setMessage("비밀번호를 입력해주세요.");
+            setMessage({
+                type: "error",
+                text: "비밀번호를 입력해주세요."
+            });
             return;
         }
 
@@ -29,12 +38,21 @@ function LoginPage({onLogin}){
             console.log(result);
             localStorage.setItem("loginUser",JSON.stringify(result.data));
             onLogin(result.data);
+
             setEmail("");
             setPassword("");
-            setMessage(result.message);
+
+            setMessage({
+                type: "success",
+                text: result.message
+            });
+
         } catch (error){
             console.error(error);
-            setMessage(error.message);
+            setMessage({
+                type: "error",
+                text: error.message
+            });
         }
     }
 
@@ -56,7 +74,11 @@ function LoginPage({onLogin}){
                 />
                 <button type="button" onClick={handleLogin}>로그인</button>
             </form>
-            {message && <p className="message">{message}</p>}
+            {message && (
+                <p className={`message ${message.type}`}>
+                    {message.text}
+                </p>
+            )}
         </section>
     );
 }

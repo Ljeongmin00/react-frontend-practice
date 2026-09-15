@@ -101,8 +101,15 @@ button {
 
 .message {
   margin-top: 16px;
-  color: #2563eb;
   font-weight: 600;
+}
+
+.message.success{
+  color: #15803d;
+}
+
+.message.error{
+  color: #dc2626;
 }
 
 .user-name {

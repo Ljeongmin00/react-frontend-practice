@@ -5,23 +5,35 @@ function SignupPage(){
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState(null);
 
     async function handleSignup() {
         if (username.trim() === ""){
-            setMessage("이름을 입력해주세요.");
+            setMessage({
+                type: "error",
+                text: "이름을 입력해주세요."
+            });
             return;
         }
         if (email.trim() === ""){
-            setMessage("이메일을 입력해주세요.");
+            setMessage({
+                type: "error",
+                text: "이메일을 입력해주세요."
+            });
             return;
         }
         if(!email.includes("@")){
-            setMessage("이메일 형식이 올바르지 않습니다.");
+            setMessage({
+                type: "error",
+                text: "이메일 형식이 올바르지 않습니다."
+            });
             return;
         }
         if(password.length < 8 ){
-            setMessage("비밀번호는 8자 이상이어야 합니다.");
+            setMessage({
+                type: "error",
+                text: "비밀번호는 8자 이상이어야 합니다."
+            });
             return;
         }
         try {
@@ -32,10 +44,21 @@ function SignupPage(){
             });
 
             console.log(result);
-            setMessage(result.message);
+            setMessage({
+                type: "success",
+                text: result.message
+            });
+
+            setUsername("");
+            setEmail("");
+            setPassword("");
+
         } catch (error) {
             console.error(error);
-            setMessage(error.message);
+            setMessage({
+                type: "error",
+                text: error.message
+            });
         }
     }
 
@@ -64,7 +87,11 @@ function SignupPage(){
                 <button type="button" onClick={handleSignup}>회원가입</button>
             </form>
             
-            {message && <p className="message">{message}</p>}
+            {message && (
+                <p className={`message ${message.type}`}>
+                    {message.text}
+                </p>
+            )}
         </section>
     );
 }
