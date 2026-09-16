@@ -119,3 +119,47 @@ button {
   font-weight: 600;
   color: #333;
 }
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0 0 8px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #666;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 18px;
+  background-color: #fff;
+}
+
+.post-item h3 {
+  margin: 0 0 8px;
+}
+
+.post-item p {
+  margin: 0 0 12px;
+  color: #444;
+}
+
+.post-item span {
+  font-size: 14px;
+  color: #666;
+}

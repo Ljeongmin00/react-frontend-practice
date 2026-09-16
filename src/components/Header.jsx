@@ -34,6 +34,14 @@ function Header({currentPage, onChangePage, loginUser, onLogout}) {
                         >
                         회원가입
                         </button>
+
+                        <button
+                            type="button"
+                            className={currentPage === "posts" ? "active" : ""}
+                            onClick={() => onChangePage("posts")}
+                            >
+                            게시글
+                            </button>
                      </>
                 )}
             </nav>

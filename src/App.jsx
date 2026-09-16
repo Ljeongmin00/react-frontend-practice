@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import PostListPage from "./pages/PostListPage";
 
 function App() {
   const savedUser = localStorage.getItem("loginUser");
@@ -38,6 +39,7 @@ function App() {
            />
            )}
         {currentPage === "signup" && <SignupPage />}
+        {currentPage === "posts" && <PostListPage />}
       </main>
     </div>
   );
