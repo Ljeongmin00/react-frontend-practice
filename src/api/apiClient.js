@@ -18,8 +18,8 @@ async function request(path, options = {}) {
     return result;
 }
 
-export async function getPosts() {
-  return request("/posts?page=0&size=10");
+export async function getPosts(page = 0, size = 10) {
+  return request(`/posts?page=${page}&size=${size}`);
 }
 
 export async function signup(data) {

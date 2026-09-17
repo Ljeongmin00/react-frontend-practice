@@ -1,18 +1,39 @@
+import { getPosts } from "../api/apiClient";
+import { useEffect,useState } from "react";
+
 function PostListPage(){
-    const posts = [
-        {
-            id: 1,
-            title: "첫 번째 게시글",
-            content: "게시글 목록 화면을 만드는 연습입니다.",
-            username: "reactuser"
-        },
-        {
-            id: 2,
-            title: "두 번째 게시글",
-            content: "나중에는 이 데이터를 백엔드 API에서 가져올 예정입니다.",
-            username: "testuser"
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        loadPosts();
+    },[]);
+
+    async function loadPosts(){
+        try{
+        setLoading(true);
+        setMessage(null);
+
+        const result = await getPosts();
+        setPosts(result.data.content);
+
+        if (result.data.content.length === 0 ) {
+            setMessage({
+                type: "error",
+                text: "게시글이 없습니다."
+            });
         }
-    ];
+        
+        } catch (error) {
+            setMessage({
+                type: "error",
+                text: error.message
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
     return (
         <section className="page">
             <div className="page-header">
@@ -23,6 +44,16 @@ function PostListPage(){
 
             <button type="button">글쓰기</button>
             </div>
+
+            {loading && (
+                <p className="message">게시글을 불러오는 중입니다...</p>
+            )}
+
+            {message && (
+                <p className={`message ${message.type}`}>
+                    {message.text}
+                </p>
+            )}
 
             <div className="post-list">
                 {posts.map((post) => (
