@@ -163,3 +163,32 @@ button {
   font-size: 14px;
   color: #666;
 }
+
+.post-detail {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.back-button {
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.post-detail-meta {
+  margin: 0 0 24px;
+  color: #666;
+  font-size: 14px;
+}
+
+.post-detail-content {
+  border-top: 1px solid #eee;
+  padding-top: 24px;
+  color: #333;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}

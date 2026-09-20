@@ -4,11 +4,13 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PostListPage from "./pages/PostListPage";
+import PostDetailPage from "./pages/PostDetailPage";
 
 function App() {
   const savedUser = localStorage.getItem("loginUser");
 
   const [currentPage, setCurrentPage] = useState("home");
+  const [selectedPostId, setSelectedPostId] = useState(null);
   const [loginUser, setLoginUser] = useState(
     savedUser ? JSON.parse(savedUser) : null
   );
@@ -17,6 +19,11 @@ function App() {
     localStorage.removeItem("loginUser");
     setLoginUser(null);
     setCurrentPage("home");
+  }
+
+  function handleSelectPost(postId) {
+    setSelectedPostId(postId);
+    setCurrentPage("postDetail");
   }
 
   return (
@@ -39,7 +46,15 @@ function App() {
            />
            )}
         {currentPage === "signup" && <SignupPage />}
-        {currentPage === "posts" && <PostListPage />}
+        {currentPage === "posts" && (
+          <PostListPage onSelectPost={handleSelectPost}/>
+        )}
+        {currentPage === "postDetail" && (
+          <PostDetailPage 
+          postId={selectedPostId} 
+          onBack={() => setCurrentPage("posts")}
+          />
+        )}
       </main>
     </div>
   );

@@ -22,6 +22,10 @@ export async function getPosts(page = 0, size = 10) {
   return request(`/posts?page=${page}&size=${size}`);
 }
 
+export async function getPost(postId) {
+    return request(`/posts/${postId}`);
+}
+
 export async function signup(data) {
     return request("/users", {
         method: "POST",

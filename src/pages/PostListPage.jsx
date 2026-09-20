@@ -1,7 +1,7 @@
 import { getPosts } from "../api/apiClient";
 import { useEffect,useState } from "react";
 
-function PostListPage(){
+function PostListPage( {onSelectPost} ){
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -61,6 +61,13 @@ function PostListPage(){
                         <h3>{post.title}</h3>
                         <p>{post.content}</p>
                         <span>작성자: {post.username}</span>
+
+                        <button
+                            type="button"
+                            onClick={() => onSelectPost(post.id)}
+                        >
+                            상세보기
+                        </button>
                     </article>
                 ))}
             </div>
