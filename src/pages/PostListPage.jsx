@@ -1,7 +1,7 @@
 import { getPosts } from "../api/apiClient";
 import { useEffect,useState } from "react";
 
-function PostListPage( {onSelectPost} ){
+function PostListPage( {onSelectPost, onCreatePost} ){
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -42,7 +42,12 @@ function PostListPage( {onSelectPost} ){
             <p>전체 게시글을 확인할 수 있습니다.</p>
             </div>
 
-            <button type="button">글쓰기</button>
+            <button 
+                type="button"
+                onClick={onCreatePost}
+                >
+                글쓰기
+                </button>
             </div>
 
             {loading && (

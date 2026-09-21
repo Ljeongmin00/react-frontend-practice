@@ -1,13 +1,32 @@
-function Header({currentPage, onChangePage, loginUser, onLogout}) {
+function Header({currentPage, onChangePage, loginUser, onLogout, onCreatePost}) {
     return (
         <header className="header">
             <h1 className="logo" onClick={() => onChangePage("home")}>게시판</h1>
             
             <nav className="nav">
                 <button 
-                type="button"
-                className={currentPage === "home" ? "active" : ""} 
-                onClick={() => onChangePage("home")}>홈</button>
+                    type="button"
+                    className={currentPage === "home" ? "active" : ""} 
+                    onClick={() => onChangePage("home")}
+                    >
+                    홈
+                </button>
+
+                 <button
+                    type="button"
+                    className={currentPage === "posts" ? "active" : ""}
+                    onClick={() => onChangePage("posts")}
+                    >
+                    게시글
+                </button>
+
+                <button
+                    type="button"
+                    className={currentPage === "postCreate" ? "active" : ""}
+                    onClick={onCreatePost}
+                    >
+                    글쓰기
+                </button>
 
                 {loginUser ? (
                     <>
@@ -34,14 +53,6 @@ function Header({currentPage, onChangePage, loginUser, onLogout}) {
                         >
                         회원가입
                         </button>
-
-                        <button
-                            type="button"
-                            className={currentPage === "posts" ? "active" : ""}
-                            onClick={() => onChangePage("posts")}
-                            >
-                            게시글
-                            </button>
                      </>
                 )}
             </nav>

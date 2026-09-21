@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PostListPage from "./pages/PostListPage";
 import PostDetailPage from "./pages/PostDetailPage";
+import PostCreatePage from "./pages/PostCreatePage";
 
 function App() {
   const savedUser = localStorage.getItem("loginUser");
@@ -26,6 +27,14 @@ function App() {
     setCurrentPage("postDetail");
   }
 
+  function handleCreatePost(){
+    if(!loginUser) {
+      setCurrentPage("login");
+      return;
+    }
+    setCurrentPage("postCreate");
+  }
+
   return (
     <div className="app">
       <Header 
@@ -33,6 +42,7 @@ function App() {
       onChangePage={setCurrentPage}
       loginUser = {loginUser}
       onLogout = {handleLogout}
+      onCreatePost = {handleCreatePost}
       />
 
       <main className="main">
@@ -47,7 +57,10 @@ function App() {
            )}
         {currentPage === "signup" && <SignupPage />}
         {currentPage === "posts" && (
-          <PostListPage onSelectPost={handleSelectPost}/>
+          <PostListPage
+           onSelectPost={handleSelectPost}
+           onCreatePost={handleCreatePost}
+           />
         )}
         {currentPage === "postDetail" && (
           <PostDetailPage 
@@ -55,6 +68,14 @@ function App() {
           onBack={() => setCurrentPage("posts")}
           />
         )}
+
+        {currentPage === "postCreate" && loginUser && (
+          <PostCreatePage
+            loginUser={loginUser}
+            onCancel={() => setCurrentPage("posts")}
+          />
+        )}
+
       </main>
     </div>
   );
