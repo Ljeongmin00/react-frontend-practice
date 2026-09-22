@@ -26,6 +26,13 @@ export async function getPost(postId) {
     return request(`/posts/${postId}`);
 }
 
+export async function createPost(data) {
+    return request("/posts",{
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+}
+
 export async function signup(data) {
     return request("/users", {
         method: "POST",

@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { createPost } from "../api/apiClient";
 
-function PostCreatePage( {loginUser, onCancel}){
+function PostCreatePage( {loginUser, onCancel, onCreated}){
     const[title,setTitle] = useState("");
     const[content,setContent] = useState("");
     const[message,setMessage] = useState(null);
+    const[submitting, setSubmitting] = useState(false);
 
-function handleSubmit(event){
+async function handleSubmit(event){
     event.preventDefault();
+
+    if (submitting === true) return;
     
     if(title.trim()===""){
         setMessage("제목을 입력해주세요.");
@@ -19,11 +23,20 @@ function handleSubmit(event){
     }
 
     setMessage(null);
-    console.log({
+    setSubmitting(true);
+try{
+    const result = await createPost({
         title: title.trim(),
         content: content.trim(),
         userId: loginUser.id
     });
+
+    onCreated(result.data.id);
+}catch (error) {
+    setMessage(error.message);
+} finally{
+    setSubmitting(false);
+}
 }
     return(
         <>
@@ -46,8 +59,8 @@ function handleSubmit(event){
             />
 
             <button
-                type="submit">
-                작성
+                type="submit" disabled={submitting}>
+                {submitting ? "작성 중..." : "작성"}
                 </button>
 
             <button

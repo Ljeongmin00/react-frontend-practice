@@ -72,6 +72,7 @@ function App() {
         {currentPage === "postCreate" && loginUser && (
           <PostCreatePage
             loginUser={loginUser}
+            onCreated={handleSelectPost}
             onCancel={() => setCurrentPage("posts")}
           />
         )}
