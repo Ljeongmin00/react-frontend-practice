@@ -33,6 +33,13 @@ export async function createPost(data) {
     })
 }
 
+export async function updatePost(postId, data) {
+    return request(`/posts/${postId}`,{
+        method: "PUT",
+        body: JSON.stringify(data)
+    })
+}
+
 export async function signup(data) {
     return request("/users", {
         method: "POST",

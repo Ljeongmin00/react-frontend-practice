@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPost } from "../api/apiClient"; 
 
-function PostDetailPage({postId, onBack}){
+function PostDetailPage({postId, onBack, loginUser,onEdit}){
     const [post,setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
@@ -31,6 +31,12 @@ function PostDetailPage({postId, onBack}){
     if (post === null) {
         return <p>게시글 정보가 없습니다.</p>
     }
+
+    const loginUserId = loginUser?.userId ?? loginUser?.id;
+    const isAuthor =
+        loginUserId != null &&
+        Number(post.userId) === Number(loginUserId);
+
     return(
         <div className="post-detail">
             <button 
@@ -40,6 +46,12 @@ function PostDetailPage({postId, onBack}){
                 >
                 목록으로
             </button>
+
+            {isAuthor && (
+                <button type="button" onClick={onEdit}>
+                    수정
+                </button>
+            )}
 
             <h2>{post.title}</h2>
             <p className="post-detail-meta">

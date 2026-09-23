@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import PostListPage from "./pages/PostListPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import PostCreatePage from "./pages/PostCreatePage";
+import PostEditPage from "./pages/PostEditPage";
 
 function App() {
   const savedUser = localStorage.getItem("loginUser");
@@ -65,7 +66,9 @@ function App() {
         {currentPage === "postDetail" && (
           <PostDetailPage 
           postId={selectedPostId} 
+          loginUser={loginUser}
           onBack={() => setCurrentPage("posts")}
+          onEdit={() => setCurrentPage("postEdit")}
           />
         )}
 
@@ -77,6 +80,13 @@ function App() {
           />
         )}
 
+        {currentPage === "postEdit" && (
+          <PostEditPage 
+          postId={selectedPostId} 
+          loginUser={loginUser}
+          onUpdated={handleSelectPost}
+          />
+        )}
       </main>
     </div>
   );
