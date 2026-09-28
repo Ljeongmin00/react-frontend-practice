@@ -69,6 +69,10 @@ function App() {
           loginUser={loginUser}
           onBack={() => setCurrentPage("posts")}
           onEdit={() => setCurrentPage("postEdit")}
+          onDeleted={() => {
+            setSelectedPostId(null);
+            setCurrentPage("posts");
+          }}
           />
         )}
 

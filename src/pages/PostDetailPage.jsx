@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getPost } from "../api/apiClient"; 
+import { deletePost, getPost } from "../api/apiClient"; 
 
-function PostDetailPage({postId, onBack, loginUser,onEdit}){
+function PostDetailPage({postId, onBack, loginUser,onEdit, onDeleted}){
     const [post,setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         async function loadPost() {
@@ -19,6 +20,24 @@ function PostDetailPage({postId, onBack, loginUser,onEdit}){
     }
         loadPost();
     }, [postId]);
+
+    async function handleDelete() {
+        const confirmed = window.confirm("게시글을 삭제하시겠습니까?");
+        
+        if(!confirmed){
+            return;
+        }
+        setDeleting(true);
+
+    try {
+        await deletePost(postId);
+        onDeleted();
+    } catch (error){
+        setMessage(error.message);
+    } finally {
+        setDeleting(false);
+    }
+    }
 
     if (loading === true) {
         return <p>게시물을 불러오는 중입니다.</p>
@@ -48,9 +67,20 @@ function PostDetailPage({postId, onBack, loginUser,onEdit}){
             </button>
 
             {isAuthor && (
-                <button type="button" onClick={onEdit}>
-                    수정
-                </button>
+                <div className="post-actions">
+                    <button type="button" onClick={onEdit}>
+                        수정
+                    </button>
+
+                    <button 
+                        type="button"
+                        className="danger-button"
+                        onClick={handleDelete}
+                        disabled={deleting}
+                    >
+                        {deleting ? "삭제 중..." : "삭제"}
+                    </button>
+                </div>
             )}
 
             <h2>{post.title}</h2>

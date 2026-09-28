@@ -192,3 +192,25 @@ button {
   line-height: 1.7;
   white-space: pre-wrap;
 }
+
+.post-actions button {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background-color: white;
+}
+
+.post-actions .danger-button {
+    border-color: #dc2626;
+    background-color: #dc2626;
+    color: white;
+}
+
+.danger-button:hover:not(:disabled) {
+    background-color: #b91c1c;
+}
+
+.danger-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

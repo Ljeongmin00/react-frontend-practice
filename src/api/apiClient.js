@@ -40,6 +40,12 @@ export async function updatePost(postId, data) {
     })
 }
 
+export async function deletePost(postId) {
+    return request(`/posts/${postId}`,{
+        method: "DELETE",
+    });
+}
+
 export async function signup(data) {
     return request("/users", {
         method: "POST",
