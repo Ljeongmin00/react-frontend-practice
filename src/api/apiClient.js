@@ -26,6 +26,10 @@ export async function getPost(postId) {
     return request(`/posts/${postId}`);
 }
 
+export async function getComments(postId) {
+    return request(`/posts/${postId}/comments`);
+}
+
 export async function createPost(data) {
     return request("/posts",{
         method: "POST",

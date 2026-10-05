@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { deletePost, getPost } from "../api/apiClient"; 
+import CommentList from "../components/CommentList";
 
 function PostDetailPage({postId, onBack, loginUser,onEdit, onDeleted}){
     const [post,setPost] = useState(null);
@@ -90,6 +91,7 @@ function PostDetailPage({postId, onBack, loginUser,onEdit, onDeleted}){
             <div className="post-detail-content">
                 {post.content}
             </div>
+            <CommentList postId={postId} />
         </div>
     )
 }
