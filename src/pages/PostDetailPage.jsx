@@ -91,7 +91,7 @@ function PostDetailPage({postId, onBack, loginUser,onEdit, onDeleted}){
             <div className="post-detail-content">
                 {post.content}
             </div>
-            <CommentList postId={postId} />
+            <CommentList postId={postId} loginUser={loginUser} />
         </div>
     )
 }

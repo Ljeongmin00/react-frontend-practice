@@ -30,6 +30,13 @@ export async function getComments(postId) {
     return request(`/posts/${postId}/comments`);
 }
 
+export async function createComment(postId, data) {
+    return request(`/posts/${postId}/comments`, {
+        method: "POST",
+        body: JSON.stringify(data)
+    });
+}
+
 export async function createPost(data) {
     return request("/posts",{
         method: "POST",
