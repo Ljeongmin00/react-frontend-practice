@@ -1,5 +1,6 @@
 import { getPosts } from "../api/apiClient";
 import { useEffect,useState } from "react";
+import PostSearchForm from "../components/PostSearchForm";
 
 function PostListPage( {onSelectPost, onCreatePost} ){
     const [posts, setPosts] = useState([]);
@@ -7,6 +8,7 @@ function PostListPage( {onSelectPost, onCreatePost} ){
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
+    const [searchKeyword, setSearchKeyword] = useState("");
 
     useEffect(() => {
         loadPosts();
@@ -37,6 +39,15 @@ function PostListPage( {onSelectPost, onCreatePost} ){
             setLoading(false);
         }
     }
+    
+    function handleSearch(keyword){
+        setSearchKeyword(keyword);
+    }
+
+    function handleReset(){
+        setSearchKeyword("");
+    }
+
     return (
         <section className="page">
             <div className="page-header">
@@ -52,6 +63,17 @@ function PostListPage( {onSelectPost, onCreatePost} ){
                 글쓰기
                 </button>
             </div>
+
+            <PostSearchForm
+                onSearch={handleSearch}
+                onReset={handleReset}
+            />
+
+            {searchKeyword !== "" && (
+                <p className="search-result-label">
+                    검색어: <strong>{searchKeyword}</strong>
+                </p>
+            )}
 
             {loading && (
                 <p className="message">게시글을 불러오는 중입니다...</p>

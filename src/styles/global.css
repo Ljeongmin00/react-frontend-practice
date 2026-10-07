@@ -252,3 +252,46 @@ button {
     color: #777;
     text-align: center;
 }
+
+.post-search-area {
+    margin-bottom: 16px;
+}
+
+.post-search-form {
+    display: flex;
+    gap: 8px;
+}
+
+.post-search-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font: inherit;
+}
+
+.post-search-form button {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    cursor: pointer;
+}
+
+.search-result-label {
+    margin: 0 0 16px;
+}
+
+@media (max-width: 600px) {
+    .post-search-form {
+        flex-wrap: wrap;
+    }
+
+    .post-search-form input {
+        flex-basis: 100%;
+    }
+}

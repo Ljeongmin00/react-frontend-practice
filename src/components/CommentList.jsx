@@ -28,7 +28,7 @@ function CommentList({ postId, loginUser }) {
     }, [postId, reloadCount]);
 
     async function handleSubmit(event) {
-        event.preventDefault()
+        event.preventDefault();
         if (submitting) return;
 
         setSubmitMessage("");
