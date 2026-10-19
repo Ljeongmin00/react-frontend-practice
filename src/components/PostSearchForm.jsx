@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function PostSearchForm({onSearch, onReset}) {
+function PostSearchForm({onSearch, onReset, loading}) {
     const [keyword, setKeyword] = useState("");
     const [message, setMessage] = useState("");
 
@@ -34,11 +34,11 @@ function PostSearchForm({onSearch, onReset}) {
                 onChange={(event) => setKeyword(event.target.value)}
                 placeholder="검색어를 입력하세요."
             />
-            <button type="submit">
-                검색
+            <button type="submit" disabled={loading}>
+                {loading ? "검색 중..." : "검색"}
             </button>
 
-            <button type="button" onClick={handleReset}>
+            <button type="button" onClick={handleReset} disabled={loading}>
                 초기화
             </button>
 

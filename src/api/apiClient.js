@@ -70,3 +70,13 @@ export async function login(data) {
         body: JSON.stringify(data)
     });
 }
+
+export async function searchPosts(keyword, page=0, size=10) {
+    const params = new URLSearchParams({
+        keyword,
+        page: String(page),
+        size: String(size)
+    });
+
+    return request(`/posts/search?${params.toString()}`);
+}

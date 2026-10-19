@@ -1,6 +1,6 @@
-import { getPosts } from "../api/apiClient";
 import { useEffect,useState } from "react";
 import PostSearchForm from "../components/PostSearchForm";
+import { getPosts, searchPosts } from "../api/apiClient";
 
 function PostListPage( {onSelectPost, onCreatePost} ){
     const [posts, setPosts] = useState([]);
@@ -12,21 +12,25 @@ function PostListPage( {onSelectPost, onCreatePost} ){
 
     useEffect(() => {
         loadPosts();
-    },[page]);
+    },[page, searchKeyword]);
 
     async function loadPosts(){
         try{
         setLoading(true);
         setMessage(null);
 
-        const result = await getPosts(page,10);
+        const result = searchKeyword
+            ? await searchPosts(searchKeyword, page, 10)
+            : await getPosts(page, 10);
         setPosts(result.data.content);
         setTotalPages(result.data.totalPages);
 
         if (result.data.content.length === 0 ) {
             setMessage({
-                type: "error",
-                text: "게시글이 없습니다."
+                type: "info",
+                text: searchKeyword
+                    ? "검색 결과가 없습니다."
+                    : "게시글이 없습니다."
             });
         }
         
@@ -42,10 +46,12 @@ function PostListPage( {onSelectPost, onCreatePost} ){
     
     function handleSearch(keyword){
         setSearchKeyword(keyword);
+        setPage(0);
     }
 
     function handleReset(){
         setSearchKeyword("");
+        setPage(0);
     }
 
     return (
@@ -67,6 +73,7 @@ function PostListPage( {onSelectPost, onCreatePost} ){
             <PostSearchForm
                 onSearch={handleSearch}
                 onReset={handleReset}
+                loading={loading}
             />
 
             {searchKeyword !== "" && (
