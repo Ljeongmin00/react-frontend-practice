@@ -6,6 +6,7 @@ function PostListPage( {onSelectPost, onCreatePost} ){
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -22,10 +23,14 @@ function PostListPage( {onSelectPost, onCreatePost} ){
         const result = searchKeyword
             ? await searchPosts(searchKeyword, page, 10)
             : await getPosts(page, 10);
-        setPosts(result.data.content);
-        setTotalPages(result.data.totalPages);
 
-        if (result.data.content.length === 0 ) {
+        const pageData = result.data;
+
+        setPosts(pageData.content);
+        setTotalPages(pageData.totalPages);
+        setTotalElements(pageData.totalElements);
+
+        if (pageData.content.length === 0 ) {
             setMessage({
                 type: "info",
                 text: searchKeyword
@@ -76,11 +81,15 @@ function PostListPage( {onSelectPost, onCreatePost} ){
                 loading={loading}
             />
 
-            {searchKeyword !== "" && (
-                <p className="search-result-label">
-                    검색어: <strong>{searchKeyword}</strong>
-                </p>
-            )}
+           <div className="post-list-summary">
+                {searchKeyword ? (
+                    <p>
+                        <strong>{searchKeyword}</strong> 검색 결과: {totalElements}개
+                    </p>
+                ) : (
+                    <p>전체 게시글 {totalElements}개</p>
+                )}
+           </div>
 
             {loading && (
                 <p className="message">게시글을 불러오는 중입니다...</p>
@@ -108,22 +117,32 @@ function PostListPage( {onSelectPost, onCreatePost} ){
                     </article>
                 ))}
             </div>
-            {totalPages > 0 && (
+            {totalPages > 1 && (
                 <div className="pagination">
                     <button
                     type="button"
+                    className="pagination-button"
                     onClick={() => setPage(page - 1)}
                     disabled={page ===0 || loading}
                     >
                     이전
                     </button>
 
-                    <span>
-                        {page + 1} / {totalPages}
-                    </span>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            className={page === index ? "pagination-button active" : "pagination-button"}
+                            onClick={() => setPage(index)}
+                            disabled={loading}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
 
                     <button
                     type="button"
+                    className="pagination-button"
                     onClick={() => setPage(page + 1)}
                     disabled={page >= totalPages - 1 || loading}
                     >

@@ -295,3 +295,32 @@ button {
         flex-basis: 100%;
     }
 }
+
+.pagination-button {
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    color: #222;
+    cursor: pointer;
+}
+
+.pagination-button.active {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.pagination-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
